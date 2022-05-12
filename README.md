@@ -6,20 +6,39 @@ PROXY headers using the go proxy proto listener https://github.com/pires/go-prox
 
 ### JSON
 
-This module is only designed to work with JSON configurations in Caddy.
-Load the listener before the tls wrapper
+Load the listener before the tls wrapper.
 
-```js
+Via JSON config:
+
+```json
 {
   "apps": {
     "http": {
       "servers": {
         "myserver": {
           // ...
-          "listener_wrappers":[{"wrapper": "go_proxyproto", "timeout": "5s"}, {"wrapper":"tls"}]
+          "listener_wrappers": [
+            {"wrapper": "go_proxyproto", "timeout": "5s"},
+            {"wrapper": "tls"}
+          ]
           // ...
         }
       }
+    }
+  }
+}
+```
+
+Via Caddyfile config, in your global options:
+
+```
+{
+  servers {
+    listener_wrappers {
+      go_proxyproto {
+        timeout <duration>
+      }
+      tls
     }
   }
 }
